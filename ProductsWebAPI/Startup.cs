@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ProductsWebAPI.Infrastructure;
+using ProductsWebAPI.Services;
 
 namespace ProductsWebAPI
 {
@@ -26,9 +27,13 @@ namespace ProductsWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //register Db Context
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(
                     Configuration["ConnectionString"]));
+
+            //register repository DI
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
