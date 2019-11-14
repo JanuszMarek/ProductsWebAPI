@@ -17,30 +17,30 @@ namespace Repository
             _dbContext = context;
         }
 
-        public Product GetProduct(Guid productId)
+        public Product GetById(Guid id)
         {
-            Product product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
+            Product product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
             return product;
         }
 
-        public IEnumerable<Product> GetProducts()
+        public IEnumerable<Product> GetAll()
         {
             IEnumerable<Product> products = _dbContext.Products.OrderBy(p => p.Name);
             return products;
         }
 
-        public void CreateProduct(Product product)
+        public void Create(Product product)
         {
             product.Id = new Guid();
             _dbContext.Products.Add(product);
         }
 
-        public void UpdateProduct(Product product)
+        public void Update(Product product)
         {
             // no code in this implementation
         }
 
-        public void DeleteProduct(Product product)
+        public void Delete(Product product)
         {
             _dbContext.Products.Remove(product);
         }
