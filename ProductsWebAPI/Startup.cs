@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ProductsWebAPI.Infrastructure;
 using Repository;
 using Repository.Interfaces;
 
@@ -37,6 +39,9 @@ namespace ProductsWebAPI
 
             //register repository DI
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            //AutoMapper config
+            services.AddAutoMapper(typeof(MapperProfile));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
