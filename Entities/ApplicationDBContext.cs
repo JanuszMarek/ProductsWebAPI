@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProductsWebAPI.Models;
+﻿using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace ProductsWebAPI.Infrastructure
+namespace Entities
 {
     public class ApplicationDbContext : DbContext
     {

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Entities;
+using Entities.Models;
+using Repository.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProductsWebAPI.Infrastructure;
-using ProductsWebAPI.Models;
 
-namespace ProductsWebAPI.Services
+namespace Repository
 {
     public class ProductRepository : IProductRepository
     {
