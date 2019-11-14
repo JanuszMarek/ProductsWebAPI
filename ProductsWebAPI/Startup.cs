@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using ProductsWebAPI.Infrastructure;
-using ProductsWebAPI.Services;
+using Repository;
+using Repository.Interfaces;
 
 namespace ProductsWebAPI
 {
@@ -45,6 +48,17 @@ namespace ProductsWebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseExceptionHandler(config =>
+            {
+                config.Run(async context =>
+                {
+                    IExceptionHandlerFeature exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
+
+                    context.Response.StatusCode = 500;
+                    await context.Response.WriteAsync("Exception: " + exceptionHandlerFeature.Error.Message);
+                });
+            });
 
             app.UseMvc();
         }
