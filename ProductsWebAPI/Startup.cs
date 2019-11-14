@@ -17,6 +17,8 @@ using Microsoft.Extensions.Options;
 using ProductsWebAPI.Infrastructure;
 using Repository;
 using Repository.Interfaces;
+using Services;
+using Services.Interfaces;
 
 namespace ProductsWebAPI
 {
@@ -39,6 +41,9 @@ namespace ProductsWebAPI
 
             //register repository DI
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            //register service DI
+            services.AddScoped<IProductService, ProductService>();
 
             //AutoMapper config
             services.AddAutoMapper(typeof(MapperProfile));

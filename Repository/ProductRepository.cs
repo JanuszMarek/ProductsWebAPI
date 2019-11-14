@@ -25,7 +25,7 @@ namespace Repository
 
         public IEnumerable<Product> GetAll()
         {
-            IEnumerable<Product> products = _dbContext.Products.OrderBy(p => p.Name);
+            IEnumerable<Product> products = _dbContext.Products;
             return products;
         }
 

@@ -12,6 +12,9 @@ namespace ProductsWebAPI.Infrastructure
         public MapperProfile()
         {
             CreateMap<Product, ProductDto>();
+            CreateMap<ProductDto, Product>();
+            CreateMap<ProductCreateInputModel, Product>();
+            CreateMap<ProductUpdateInputModel, Product>();
         }
     }
 }
