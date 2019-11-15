@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Entities;
+using Entities.Models;
+using Entities.Models.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ProductsWebAPI.ActionFilters;
 using ProductsWebAPI.Infrastructure;
 using Repository;
 using Repository.Interfaces;
@@ -34,10 +37,20 @@ namespace ProductsWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //disable auto validation, I will use custom
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             //register Db Context
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(
                     Configuration["ConnectionString"]));
+
+            //custom Validation filters
+            services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ExistValidationFilterAttribute<ProductDto, IProductService>>();
 
             //register repository DI
             services.AddScoped<IProductRepository, ProductRepository>();

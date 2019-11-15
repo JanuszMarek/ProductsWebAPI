@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using ProductsWebAPI.ActionFilters;
 using Services.Interfaces;
 
 namespace ProductsWebAPI.Controllers
@@ -23,16 +24,17 @@ namespace ProductsWebAPI.Controllers
         [HttpGet]
         public IActionResult GetProducts()
         {
-            IEnumerable<ProductDto> products = _productService.GetProducts();
+            IEnumerable<ProductDto> products = _productService.GetEntites();
 
             return new JsonResult(products);
         }
 
         // GET api/product/5
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(ExistValidationFilterAttribute<ProductDto, IProductService>))]
         public IActionResult GetProduct(Guid id)
         {
-            ProductDto product = _productService.GetProduct(id);
+            ProductDto product = _productService.GetById(id);
 
             if(product == null)
             {
@@ -44,47 +46,31 @@ namespace ProductsWebAPI.Controllers
 
         // POST api/product
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public IActionResult CreateProduct([FromBody] ProductCreateInputModel productCreate)
         {
-            if (productCreate == null)
-            {
-                return BadRequest();
-            }
-
-            Guid createdId = _productService.CreateProduct(productCreate);
+            Guid createdId = _productService.Create(productCreate);
 
             return new JsonResult(createdId);
         }
 
         // PUT api/product/5
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ServiceFilter(typeof(ExistValidationFilterAttribute<ProductDto, IProductService>))]
         public IActionResult UpdateProduct(Guid id, [FromBody] ProductUpdateInputModel productUpdate)
         {
-            if (productUpdate == null)
-            {
-                return BadRequest();
-            }
-
-            if(!_productService.ProductExists(id))
-            {
-                return NotFound();
-            }
-
-            _productService.UpdateProduct(id, productUpdate);
+            _productService.Update(id, productUpdate);
 
             return NoContent();
         }
 
         // DELETE api/product/5
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ExistValidationFilterAttribute<ProductDto, IProductService>))]
         public IActionResult DeleteProduct(Guid id)
         {
-            if (!_productService.ProductExists(id))
-            {
-                return NotFound();
-            }
-
-            _productService.DeleteProduct(id);
+            _productService.Delete(id);
 
             return NoContent();
         }

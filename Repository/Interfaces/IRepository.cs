@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Entities.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Repository.Interfaces
 {
-    public interface IRepository<T>
+    public interface IRepository<T> where T: IEntity
     {
         T GetById(Guid id);
 
