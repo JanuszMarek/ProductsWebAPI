@@ -24,12 +24,15 @@ List of ready features:
 * HTTP DELETE api/product/{id} delete product and return status 204 NoContent
 * Global exception handler
 * ValidationActionFilters to validate input data
+* using DI for service and repository 
+* using AutoMapper for mapping entities
 
 ## To do
 List of features to do in next release:
 * logging using Nlog
 * pagination, sorting, filtration
 * HATEOAS
+* seed data
 
 ## Startup
 If you already have existing database you can change connection string in ProductsWebAPI/appsettings.json
@@ -39,7 +42,7 @@ If you already have existing database you can change connection string in Produc
   "ConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=ProductsWebAPI;Trusted_Connection=True;MultipleActiveResultSets=true"
 }
 ```
-or you can create new one be write down command in <i>Package Manager Console</i>
+or you can create new one by entering command in <i>Package Manager Console</i>
 ```
 update-database
 ```
@@ -55,6 +58,7 @@ string Name
 
 decimal Price
 ```
+There is no seed data so you have start with creating new products :)
 
 ## Status
 Project is _in progres_.
