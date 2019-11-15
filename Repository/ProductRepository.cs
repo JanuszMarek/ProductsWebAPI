@@ -17,6 +17,11 @@ namespace Repository
             _dbContext = context;
         }
 
+        public bool Exists(Guid id)
+        {
+            return _dbContext.Products.Any(p => p.Id == id);
+        }
+
         public Product GetById(Guid id)
         {
             Product product = _dbContext.Products.FirstOrDefault(p => p.Id == id);

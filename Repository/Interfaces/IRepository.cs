@@ -16,6 +16,8 @@ namespace Repository.Interfaces
 
         void Delete(T entity);
 
+        bool Exists(Guid id);
+
         bool Save();
     }
 }
