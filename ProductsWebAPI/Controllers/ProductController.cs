@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Services.Interfaces;
 
 namespace ProductsWebAPI.Controllers
 {
@@ -10,36 +12,81 @@ namespace ProductsWebAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        // GET api/values
+        private IProductService _productService;
+
+        public ProductController(IProductService productService)
+        {
+            _productService = productService;
+        }
+
+        // GET api/product
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IActionResult GetProducts()
         {
-            return new string[] { "value1", "value2" };
+            IEnumerable<ProductDto> products = _productService.GetProducts();
+
+            return new JsonResult(products);
         }
 
-        // GET api/values/5
+        // GET api/product/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public IActionResult GetProduct(Guid id)
         {
-            return "value";
+            ProductDto product = _productService.GetProduct(id);
+
+            if(product == null)
+            {
+                return NotFound();
+            }
+
+            return new JsonResult(product);
         }
 
-        // POST api/values
+        // POST api/product
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult CreateProduct([FromBody] ProductCreateInputModel productCreate)
         {
+            if (productCreate == null)
+            {
+                return BadRequest();
+            }
+
+            Guid createdId = _productService.CreateProduct(productCreate);
+
+            return CreatedAtAction(nameof(GetProduct), new { id = createdId });
         }
 
-        // PUT api/values/5
+        // PUT api/product/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult UpdateProduct(Guid id, [FromBody] ProductUpdateInputModel productUpdate)
         {
+            if (productUpdate == null)
+            {
+                return BadRequest();
+            }
+
+            if(!_productService.ProductExists(id))
+            {
+                return NotFound();
+            }
+
+            _productService.UpdateProduct(id, productUpdate);
+
+            return NoContent();
         }
 
-        // DELETE api/values/5
+        // DELETE api/product/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult DeleteProduct(Guid id)
         {
+            if (!_productService.ProductExists(id))
+            {
+                return NotFound();
+            }
+
+            _productService.DeleteProduct(id);
+
+            return NoContent();
         }
     }
 }
