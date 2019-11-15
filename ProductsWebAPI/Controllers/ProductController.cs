@@ -53,7 +53,7 @@ namespace ProductsWebAPI.Controllers
 
             Guid createdId = _productService.CreateProduct(productCreate);
 
-            return CreatedAtAction(nameof(GetProduct), new { id = createdId });
+            return new JsonResult(createdId);
         }
 
         // PUT api/product/5

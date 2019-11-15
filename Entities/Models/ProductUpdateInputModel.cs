@@ -7,7 +7,7 @@ namespace Entities.Models
 {
     public class ProductUpdateInputModel : ProductInputModel
     {
-        [Required]
+        [Required(ErrorMessage = "Id of product is missing.")]
         public Guid Id { get; set; }
     }
 }
