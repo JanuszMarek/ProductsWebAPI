@@ -51,8 +51,13 @@ namespace Services
             return product.Id;
         }
 
-        public void UpdateProduct(ProductUpdateInputModel productUpdateInputModel, Product productToUpdate)
+        public void UpdateProduct(Guid id, ProductUpdateInputModel productUpdateInputModel)
         {
+            Product productToUpdate = _repository.GetById(id);
+
+            //overwrite id - id from path more important than passed in model
+            productUpdateInputModel.Id = id;
+
             productToUpdate = _mapper.Map<Product>(productUpdateInputModel);
             _repository.Update(productToUpdate);
 
@@ -60,6 +65,22 @@ namespace Services
             {
                 throw new Exception($"Updating product {productUpdateInputModel.Name} failed on server");
             }
+        }
+
+        public void DeleteProduct(Guid id)
+        {
+            Product product = _repository.GetById(id);
+            _repository.Delete(product);
+
+            if (!_repository.Save())
+            {
+                throw new Exception($"Deleting product {product.Name} failed on server");
+            }
+        }
+
+        public bool ProductExists(Guid id)
+        {
+            return _repository.Exists(id);
         }
     }
 }
