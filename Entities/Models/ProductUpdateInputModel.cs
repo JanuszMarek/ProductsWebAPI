@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -7,7 +8,7 @@ namespace Entities.Models
 {
     public class ProductUpdateInputModel : ProductInputModel
     {
-        [Required(ErrorMessage = "Id of product is missing.")]
+        [NonDefault(ErrorMessage = "Id is required.")]
         public Guid Id { get; set; }
     }
 }
