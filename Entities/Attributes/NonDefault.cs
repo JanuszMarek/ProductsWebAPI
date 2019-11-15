@@ -13,14 +13,14 @@ namespace Entities.Attributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var isValid = true;
+            bool isValid = true;
 
             if (value is null)
             {
                 isValid = false;
             }
 
-            var type = value.GetType();
+            Type type = value.GetType();
             if (type.IsValueType)
             {
                 var defaultValue = Activator.CreateInstance(type);
