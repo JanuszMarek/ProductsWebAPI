@@ -25,7 +25,8 @@ List of ready features:
 * Global exception handler
 * ValidationActionFilters to validate input data
 * using DI for service and repository 
-* using AutoMapper for mapping entities
+* using AutoMapper for entities mapping 
+* database created by EF CodeFirst
 
 ## To do
 List of features to do in next release:
@@ -35,7 +36,7 @@ List of features to do in next release:
 * seed data
 
 ## Startup
-If you already have existing database you can change connection string in ProductsWebAPI/appsettings.json
+If you already have existing database you have to adapt connection string in ProductsWebAPI/appsettings.json
 ```
 {
   ...
