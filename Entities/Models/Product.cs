@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Entities.Models.Interfaces;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Models
 {
-    public class Product
+    public class Product : IEntity
     {
         public Guid Id { get; set; }
 

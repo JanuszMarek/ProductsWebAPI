@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Entities.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Entities.Models
 {
-    public abstract class ProductInputModel
+    public abstract class ProductInputModel : IEntityInputModel
     {
         [Required(ErrorMessage = "Product name is missing.")]
         [MaxLength(100, ErrorMessage = "Product name can not be longer than 100 characters.")]

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Entities.Models.Interfaces;
+using System;
 
 namespace Entities.Models
 {
-    public class ProductDto
+    public class ProductDto : IEntityDto
     {
         public Guid Id { get; set; }
 

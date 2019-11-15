@@ -6,18 +6,10 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IProductService
+    public interface IProductService : IService<ProductDto>
     {
-        IEnumerable<ProductDto> GetProducts();
+        Guid Create(ProductCreateInputModel productCreate);
 
-        ProductDto GetProduct(Guid id);
-
-        Guid CreateProduct(ProductCreateInputModel productCreate);
-
-        void UpdateProduct(Guid id, ProductUpdateInputModel productUpdateInputModel);
-
-        void DeleteProduct(Guid id);
-
-        bool ProductExists(Guid id);
+        void Update(Guid id, ProductUpdateInputModel productUpdateInputModel);
     }
 }

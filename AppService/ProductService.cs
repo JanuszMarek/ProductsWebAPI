@@ -20,7 +20,7 @@ namespace Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ProductDto> GetProducts()
+        public IEnumerable<ProductDto> GetEntites()
         {
             IEnumerable<Product> products = _repository.GetAll().OrderBy(p => p.Name);
             IEnumerable<ProductDto> productsDto = _mapper.Map<IEnumerable<ProductDto>>(products);
@@ -28,7 +28,7 @@ namespace Services
             return productsDto;
         }
 
-        public ProductDto GetProduct(Guid id)
+        public ProductDto GetById(Guid id)
         {
             Product product = _repository.GetById(id);
             ProductDto productDto = _mapper.Map<ProductDto>(product);
@@ -36,7 +36,7 @@ namespace Services
             return productDto;
         }
 
-        public Guid CreateProduct(ProductCreateInputModel productCreate)
+        public Guid Create(ProductCreateInputModel productCreate)
         {
             Product product = _mapper.Map<Product>(productCreate);
             product.Id = new Guid();
@@ -51,7 +51,7 @@ namespace Services
             return product.Id;
         }
 
-        public void UpdateProduct(Guid id, ProductUpdateInputModel productUpdateInputModel)
+        public void Update(Guid id, ProductUpdateInputModel productUpdateInputModel)
         {
             Product productToUpdate = _repository.GetById(id);
 
@@ -67,7 +67,7 @@ namespace Services
             }
         }
 
-        public void DeleteProduct(Guid id)
+        public void Delete(Guid id)
         {
             Product product = _repository.GetById(id);
             _repository.Delete(product);
@@ -78,7 +78,7 @@ namespace Services
             }
         }
 
-        public bool ProductExists(Guid id)
+        public bool Exists(Guid id)
         {
             return _repository.Exists(id);
         }
