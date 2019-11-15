@@ -52,13 +52,13 @@ namespace Services
 
         public void Update(Guid id, ProductUpdateInputModel productUpdateInputModel)
         {
-            Product productToUpdate = _repository.GetById(id);
+            Product product = _repository.GetById(id);
 
             //overwrite id - id from path more important than passed in model
             productUpdateInputModel.Id = id;
 
-            productToUpdate = _mapper.Map<Product>(productUpdateInputModel);
-            _repository.Update(productToUpdate);
+            _mapper.Map(productUpdateInputModel, product);
+            _repository.Update(product);
 
             if (!_repository.Save())
             {

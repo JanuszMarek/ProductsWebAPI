@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace Repository
 
         public void Update(Product product)
         {
-            // no code in this implementation
+            _dbContext.Products.Attach(product).State = EntityState.Modified;
         }
 
         public void Delete(Product product)
