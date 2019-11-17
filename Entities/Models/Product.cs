@@ -1,6 +1,7 @@
 ﻿using Entities.Models.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models
 {
@@ -13,6 +14,7 @@ namespace Entities.Models
         public string Name { get; set; }
 
         [Required]
+        [Column(TypeName = "decimal(8, 2)")]
         public decimal Price { get; set; }
     }
 }
