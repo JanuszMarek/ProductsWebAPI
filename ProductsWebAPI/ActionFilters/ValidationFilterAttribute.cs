@@ -32,9 +32,9 @@ namespace ProductsWebAPI.ActionFilters
                 context.Result = new BadRequestObjectResult(context.ModelState);
 
                 //get all errors from model state
-                string msg = context.ActionDescriptor.DisplayName + ": ";
-                context.ModelState.Values.SelectMany(v => v.Errors).ToList().ForEach(e => msg+= e.ErrorMessage + " ");
-                _logger.LogError(msg);
+                string msg = string.Empty;
+                context.ModelState.Values.SelectMany(v => v.Errors).ToList().ForEach(e => msg += e.ErrorMessage + " ");
+                _logger.LogError(context.ActionDescriptor.DisplayName + ": " + msg);
             }
         }
 
