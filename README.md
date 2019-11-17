@@ -14,9 +14,11 @@
 * EntityFramework - version 6.3.0
 * AutoMapper - version 9.0.0
 * AutoMapper.DependecyInjection - version 7.0.0
+* NLog - version 4.6.8
+* NLog.Web.AspNetCore - version 4.9.0
 
 ## Features
-List of ready features:
+[v 1.0] List of ready features:
 * HTTP GET api/product returns all available products and status 200 OK
 * HTTP GET api/product/{id} return product with parameter id and status 200 OK
 * HTTP POST api/product create new product and return his id and status 200 OK
@@ -28,12 +30,18 @@ List of ready features:
 * using AutoMapper for entities mapping 
 * database created by EF CodeFirst
 
+[v 1.1] List of ready features:
+* logging informations and errors to file using NLog
+* fix EF Core warning with Price column
+
 ## To do
-List of features to do in next release:
-* logging using Nlog
+List of features to do in next releases:
 * pagination, sorting, filtration
 * HATEOAS
 * seed data
+* soft delete
+* columns with created and modified date
+* more entities
 
 ## Startup
 If you already have existing database you have to adapt connection string in ProductsWebAPI/appsettings.json
