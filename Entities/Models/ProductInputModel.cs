@@ -10,7 +10,7 @@ namespace Entities.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Price of product is missing.")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0.")]
+        [Range(0.01, 999999.99, ErrorMessage = "Price must be greater than 0 and lower than 1M.")]
         public decimal Price { get; set; }
     }
 }
