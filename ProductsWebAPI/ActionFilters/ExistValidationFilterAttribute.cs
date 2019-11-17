@@ -1,6 +1,7 @@
 ﻿using Entities.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using Services.Interfaces;
 using System;
 
@@ -11,10 +12,12 @@ namespace ProductsWebAPI.ActionFilters
         where TEntity: class, IEntityDto
     {
         private TService _repository;
+        private readonly ILogger<ExistValidationFilterAttribute<TEntity, TService>> _logger;
 
-        public ExistValidationFilterAttribute(TService repo)
+        public ExistValidationFilterAttribute(TService repo, ILogger<ExistValidationFilterAttribute<TEntity, TService>> logger)
         {
             _repository = repo;
+            _logger = logger;
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
@@ -27,13 +30,17 @@ namespace ProductsWebAPI.ActionFilters
             }
             else
             {
-                context.Result = new BadRequestObjectResult("Not found id parameter");
+                string msg = "Id could not be found in parameters";
+                _logger.LogError(context.ActionDescriptor.DisplayName + ": " + msg);
+                context.Result = new BadRequestObjectResult(msg);
                 return;
             }
             
             if(!_repository.Exists(id))
             {
-                context.Result = new NotFoundObjectResult($"Data with id {id} can not be found.");
+                string msg = $"Data with id {id} can not be found.";
+                _logger.LogError(context.ActionDescriptor.DisplayName + ": " + msg);
+                context.Result = new NotFoundObjectResult(msg);
             }
         }
 
